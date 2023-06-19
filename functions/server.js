@@ -21,6 +21,11 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*", // Allow requests from any origin
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept",
+      },
       body: JSON.stringify({
         success: true,
         message: "Image downloaded successfully.",
@@ -30,6 +35,11 @@ exports.handler = async (event) => {
     console.error("Error while downloading the image:", error);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*", // Allow requests from any origin
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept",
+      },
       body: JSON.stringify({
         success: false,
         message: "Failed to download the image.",
