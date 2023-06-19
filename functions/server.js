@@ -5,7 +5,12 @@ const path = require("path");
 exports.handler = async (event) => {
   const { imageUrl } = event.queryStringParameters;
 
-  const imagesDirectory = path.join(process.cwd(), "src", "assets");
+  const imagesDirectory = path.join(
+    process.cwd(),
+    "functions",
+    "src",
+    "assets"
+  );
   if (!fs.existsSync(imagesDirectory)) {
     fs.mkdirSync(imagesDirectory);
   }
