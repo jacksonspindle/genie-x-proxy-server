@@ -5,34 +5,28 @@ const path = require("path");
 exports.handler = async (event) => {
   const { imageUrl } = event.queryStringParameters;
 
-  const imagesDirectory = path.join(
-    process.cwd(),
-    "functions",
-    "src",
-    "assets"
-  );
-  if (!fs.existsSync(imagesDirectory)) {
-    fs.mkdirSync(imagesDirectory);
-  }
-
   try {
     const imageResponse = await axios.get(imageUrl, { responseType: "stream" });
 
-    const fileName = "downloaded-image.jpg";
-    const filePath = path.join(imagesDirectory, fileName);
+    // Process the image response and return it as a base64 string
+    const imageBuffer = await new Promise((resolve, reject) => {
+      const chunks = [];
+      imageResponse.data.on("data", (chunk) => chunks.push(chunk));
+      imageResponse.data.on("end", () => resolve(Buffer.concat(chunks)));
+      imageResponse.data.on("error", (error) => reject(error));
+    });
 
-    const writeStream = fs.createWriteStream(filePath);
-    imageResponse.data.pipe(writeStream);
+    const base64Image = imageBuffer.toString("base64");
 
     return {
       statusCode: 200,
       headers: {
-        "Access-Control-Allow-Origin":
-          "https://main--stirring-dusk-267740.netlify.app",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         success: true,
-        message: "Image downloaded successfully.",
+        image: base64Image,
       }),
     };
   } catch (error) {
@@ -40,8 +34,8 @@ exports.handler = async (event) => {
     return {
       statusCode: 500,
       headers: {
-        "Access-Control-Allow-Origin":
-          "https://main--stirring-dusk-267740.netlify.app",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         success: false,
