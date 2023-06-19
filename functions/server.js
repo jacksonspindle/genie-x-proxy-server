@@ -22,9 +22,8 @@ exports.handler = async (event) => {
     return {
       statusCode: 200,
       headers: {
-        "Access-Control-Allow-Origin": "*", // Allow requests from any origin
-        "Access-Control-Allow-Headers":
-          "Origin, X-Requested-With, Content-Type, Accept",
+        "Access-Control-Allow-Origin":
+          "https://main--stirring-dusk-267740.netlify.app",
       },
       body: JSON.stringify({
         success: true,
@@ -36,9 +35,8 @@ exports.handler = async (event) => {
     return {
       statusCode: 500,
       headers: {
-        "Access-Control-Allow-Origin": "*", // Allow requests from any origin
-        "Access-Control-Allow-Headers":
-          "Origin, X-Requested-With, Content-Type, Accept",
+        "Access-Control-Allow-Origin":
+          "https://main--stirring-dusk-267740.netlify.app",
       },
       body: JSON.stringify({
         success: false,
