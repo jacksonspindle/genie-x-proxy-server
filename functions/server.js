@@ -18,6 +18,10 @@ exports.handler = async (event) => {
 
     const base64Image = imageBuffer.toString("base64");
 
+    console.log(imageResponse);
+    console.log(imageBuffer);
+    console.log(base64Image);
+
     return {
       statusCode: 200,
       headers: {
