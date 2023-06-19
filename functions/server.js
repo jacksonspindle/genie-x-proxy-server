@@ -5,6 +5,9 @@ const path = require("path");
 exports.handler = async (event) => {
   const { imageUrl } = event.queryStringParameters;
 
+  console.log("test");
+  console.log(imageUrl);
+
   try {
     const imageResponse = await axios.get(imageUrl, { responseType: "stream" });
 
