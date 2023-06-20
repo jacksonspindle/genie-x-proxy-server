@@ -1,6 +1,22 @@
-// import axios from "axios";
+const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
+
+// Create a storage engine for multer
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // Set the destination folder for storing the uploaded files
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    // Generate a unique filename for the uploaded file
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + "-" + file.originalname);
+  },
+});
+
+// Create the multer instance
+const upload = multer({ storage });
 
 exports.handler = async (event, context) => {
   const headers = {
@@ -19,26 +35,35 @@ exports.handler = async (event, context) => {
       headers,
       body: "",
     };
-  } else if (event.httpMethod === "GET") {
+  } else if (event.httpMethod === "POST") {
     try {
-      const imageFilePath = path.join(
-        __dirname,
-        "path/to/your/saved/image.jpg"
-      ); // Replace with the actual file path
-      const imageBuffer = fs.readFileSync(imageFilePath);
-      const base64ImageData = imageBuffer.toString("base64");
+      // Use the upload middleware to process the file upload
+      await upload.single("image")(event, context);
 
+      // Get the uploaded file object
+      const uploadedFile = event.file;
+
+      // Get the file path of the uploaded file
+      const filePath = uploadedFile.path;
+
+      // Read the uploaded file data
+      const fileData = fs.readFileSync(filePath);
+
+      // Remove the uploaded file from the server
+      fs.unlinkSync(filePath);
+
+      // Return the file data in the response
       return {
         statusCode: 200,
         headers: { ...headers, "Content-Type": "image/jpeg" },
-        body: base64ImageData,
+        body: fileData.toString("base64"),
         isBase64Encoded: true,
       };
     } catch (error) {
       return {
         statusCode: 500,
         headers,
-        body: JSON.stringify({ error: "Error while retrieving the image" }),
+        body: JSON.stringify({ error: "Error while processing the image" }),
       };
     }
   }
