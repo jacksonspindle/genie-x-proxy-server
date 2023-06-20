@@ -1,5 +1,6 @@
 // import axios from "axios";
 const fs = require("fs");
+const path = require("path");
 
 exports.handler = async (event, context) => {
   const headers = {
@@ -18,31 +19,12 @@ exports.handler = async (event, context) => {
       headers,
       body: "",
     };
-  } else if (event.httpMethod === "POST") {
-    // Handle POST request to save the image
-    try {
-      const requestBody = JSON.parse(event.body);
-      const imageData = requestBody.imageData;
-
-      // Process and save the image
-      // ...
-
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ success: true, imageData }),
-      };
-    } catch (error) {
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: "Error while processing the image" }),
-      };
-    }
   } else if (event.httpMethod === "GET") {
-    // Handle GET request to retrieve the image
     try {
-      const imageFilePath = "path/to/your/saved/image.jpg"; // Replace with the actual file path
+      const imageFilePath = path.join(
+        __dirname,
+        "path/to/your/saved/image.jpg"
+      ); // Replace with the actual file path
       const imageBuffer = fs.readFileSync(imageFilePath);
       const base64ImageData = imageBuffer.toString("base64");
 
