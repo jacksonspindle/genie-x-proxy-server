@@ -1,3 +1,5 @@
+import axios from "axios";
+
 exports.handler = async (event, context) => {
   const headers = {
     "Access-Control-Allow-Origin":
@@ -27,7 +29,7 @@ exports.handler = async (event, context) => {
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify({ success: true }),
+        body: JSON.stringify({ success: true, imageData }),
       };
     } catch (error) {
       return {
