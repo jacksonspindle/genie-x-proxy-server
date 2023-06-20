@@ -1,16 +1,14 @@
 const axios = require("axios");
-const fs = require("fs");
-const path = require("path");
 
 exports.handler = async (event) => {
-  console.log(event);
-  console.log(event.queryStringParameters);
-  const { imageUrl } = event.queryStringParameters;
-
-  console.log("test");
-  console.log(imageUrl);
-
   try {
+    console.log(event);
+    const { imageData } = JSON.parse(event.body);
+    const { imageUrl } = imageData;
+
+    console.log("test");
+    console.log(imageUrl);
+
     const imageResponse = await axios.get(imageUrl, { responseType: "stream" });
 
     // Process the image response and return it as a base64 string
@@ -22,10 +20,6 @@ exports.handler = async (event) => {
     });
 
     const base64Image = imageBuffer.toString("base64");
-
-    console.log(imageResponse);
-    console.log(imageBuffer);
-    console.log(base64Image);
 
     return {
       statusCode: 200,
@@ -39,7 +33,7 @@ exports.handler = async (event) => {
       }),
     };
   } catch (error) {
-    console.error("Error while downloading the image:", error);
+    console.error("Error while processing the image:", error);
     return {
       statusCode: 500,
       headers: {
@@ -48,7 +42,7 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({
         success: false,
-        message: "Failed to download the image.",
+        message: "Failed to process the image.",
       }),
     };
   }
