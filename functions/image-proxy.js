@@ -3,8 +3,8 @@ const axios = require("axios");
 exports.handler = async (event, context) => {
   try {
     // Retrieve image from DALLE API
-    const response = await axios.get(event); // Use the event directly as the URL
-
+    const response = await axios.get(event.rawUrl); // Use the event directly as the URL
+    console.log(response);
     const headers = {
       "Content-Type": "image/jpeg",
       "Access-Control-Allow-Origin": "*", // Adjust the CORS policy as needed
