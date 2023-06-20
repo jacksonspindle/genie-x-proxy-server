@@ -8,6 +8,8 @@ exports.handler = async (event, context) => {
     const headers = {
       "Content-Type": "image/jpeg",
       "Access-Control-Allow-Origin": "*", // Adjust the CORS policy as needed
+      "Access-Control-Allow-Methods": "GET,OPTIONS", // Allow GET and OPTIONS requests
+      "Access-Control-Allow-Headers": "Content-Type", // Allow the Content-Type header
     };
 
     // Download the image
@@ -27,6 +29,8 @@ exports.handler = async (event, context) => {
       body: "Internal Server Error",
       headers: {
         "Access-Control-Allow-Origin": "*", // Adjust the CORS policy as needed
+        "Access-Control-Allow-Methods": "GET,OPTIONS", // Allow GET and OPTIONS requests
+        "Access-Control-Allow-Headers": "Content-Type", // Allow the Content-Type header
       },
     };
   }
