@@ -5,6 +5,8 @@ exports.handler = async (event, context) => {
     // Retrieve image from DALLE API
     const response = await axios.get(event.rawUrl); // Use the event directly as the URL
 
+    console.log(event.rawUrl);
+
     if (response.status === 200) {
       const headers = {
         "Content-Type": "image/jpeg",
