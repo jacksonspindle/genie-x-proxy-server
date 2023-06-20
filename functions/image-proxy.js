@@ -10,9 +10,10 @@ exports.handler = async (event, context) => {
     if (response.status === 200) {
       const headers = {
         "Content-Type": "image/jpeg",
-        "Access-Control-Allow-Origin": "*", // Adjust the CORS policy as needed
-        "Access-Control-Allow-Methods": "GET,OPTIONS", // Allow GET and OPTIONS requests
-        "Access-Control-Allow-Headers": "Content-Type", // Allow the Content-Type header
+        "Access-Control-Allow-Origin":
+          "https://main--stirring-dusk-267740.netlify.app",
+        "Access-Control-Allow-Methods": "GET,OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
       };
 
       // Download the image
