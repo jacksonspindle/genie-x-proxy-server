@@ -3,6 +3,8 @@ const fs = require("fs");
 const path = require("path");
 
 exports.handler = async (event) => {
+  console.log(event);
+  console.log(event.queryStringParameters);
   const { imageUrl } = event.queryStringParameters;
 
   console.log("test");
