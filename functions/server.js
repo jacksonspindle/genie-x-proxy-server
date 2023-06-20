@@ -1,49 +1,36 @@
 const axios = require("axios");
 
-exports.handler = async (event) => {
-  try {
-    console.log(event);
-    const { imageData } = JSON.parse(event.body);
-    const { imageUrl } = imageData;
-
-    console.log("test");
-    console.log(imageUrl);
-
-    const imageResponse = await axios.get(imageUrl, { responseType: "stream" });
-
-    // Process the image response and return it as a base64 string
-    const imageBuffer = await new Promise((resolve, reject) => {
-      const chunks = [];
-      imageResponse.data.on("data", (chunk) => chunks.push(chunk));
-      imageResponse.data.on("end", () => resolve(Buffer.concat(chunks)));
-      imageResponse.data.on("error", (error) => reject(error));
-    });
-
-    const base64Image = imageBuffer.toString("base64");
-
+exports.handler = async (event, context) => {
+  if (event.httpMethod === "OPTIONS") {
+    // Handle OPTIONS request by returning appropriate response headers
     return {
       statusCode: 200,
       headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin":
+          "https://main--stirring-dusk-267740.netlify.app",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST",
       },
-      body: JSON.stringify({
-        success: true,
-        image: base64Image,
-      }),
+      body: "",
     };
-  } catch (error) {
-    console.error("Error while processing the image:", error);
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        success: false,
-        message: "Failed to process the image.",
-      }),
-    };
+  } else {
+    // Handle other requests (POST) to save the image
+    try {
+      const requestBody = JSON.parse(event.body);
+      const imageData = requestBody.imageData;
+
+      // Process and save the image
+      // ...
+
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ success: true }),
+      };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: "Error while processing the image" }),
+      };
+    }
   }
 };
