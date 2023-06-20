@@ -1,16 +1,18 @@
-const axios = require("axios");
-
 exports.handler = async (event, context) => {
+  const headers = {
+    "Access-Control-Allow-Origin":
+      "https://main--stirring-dusk-267740.netlify.app",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+  };
+
+  console.log(event);
+
   if (event.httpMethod === "OPTIONS") {
     // Handle OPTIONS request by returning appropriate response headers
     return {
       statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin":
-          "https://main--stirring-dusk-267740.netlify.app",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "POST",
-      },
+      headers,
       body: "",
     };
   } else {
@@ -24,11 +26,13 @@ exports.handler = async (event, context) => {
 
       return {
         statusCode: 200,
+        headers,
         body: JSON.stringify({ success: true }),
       };
     } catch (error) {
       return {
         statusCode: 500,
+        headers,
         body: JSON.stringify({ error: "Error while processing the image" }),
       };
     }
