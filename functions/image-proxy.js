@@ -19,6 +19,9 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       body: "Internal Server Error",
+      headers: {
+        "Access-Control-Allow-Origin": "*", // Adjust the CORS policy as needed
+      },
     };
   }
 };
