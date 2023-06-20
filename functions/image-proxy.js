@@ -4,24 +4,28 @@ exports.handler = async (event, context) => {
   try {
     // Retrieve image from DALLE API
     const response = await axios.get(event.rawUrl); // Use the event directly as the URL
-    console.log(response);
-    const headers = {
-      "Content-Type": "image/jpeg",
-      "Access-Control-Allow-Origin": "*", // Adjust the CORS policy as needed
-      "Access-Control-Allow-Methods": "GET,OPTIONS", // Allow GET and OPTIONS requests
-      "Access-Control-Allow-Headers": "Content-Type", // Allow the Content-Type header
-    };
 
-    // Download the image
-    const imageData = response.data;
+    if (response.status === 200) {
+      const headers = {
+        "Content-Type": "image/jpeg",
+        "Access-Control-Allow-Origin": "*", // Adjust the CORS policy as needed
+        "Access-Control-Allow-Methods": "GET,OPTIONS", // Allow GET and OPTIONS requests
+        "Access-Control-Allow-Headers": "Content-Type", // Allow the Content-Type header
+      };
 
-    // Send the image back to the frontend React app
-    return {
-      statusCode: 200,
-      headers,
-      body: imageData,
-      isBase64Encoded: true,
-    };
+      // Download the image
+      const imageData = response.data;
+
+      // Send the image back to the frontend React app
+      return {
+        statusCode: 200,
+        headers,
+        body: imageData,
+        isBase64Encoded: true,
+      };
+    } else {
+      throw new Error("Image download failed");
+    }
   } catch (error) {
     console.error("Error retrieving image:", error);
     return {
