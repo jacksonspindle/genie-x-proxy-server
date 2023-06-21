@@ -34,6 +34,7 @@ exports.handler = async function (event, context) {
       },
     };
   } catch (error) {
+    console.log("failed");
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "Failed to download images" }),
