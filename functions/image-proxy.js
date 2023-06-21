@@ -6,6 +6,7 @@ exports.handler = async function (event, context) {
     const response = await axios.get(imageUrl, {
       responseType: "arraybuffer",
     });
+    //test
 
     const base64Image = Buffer.from(response.data, "binary").toString("base64");
     const imageData = `data:${response.headers["content-type"]};base64,${base64Image}`;
