@@ -1,12 +1,11 @@
-import axios from "axios";
+const axios = require("axios");
 
-exports.handler = async function (event, context) {
+module.exports.handler = async function (event, context) {
   try {
     const imageUrl = event.queryStringParameters.imageUrl;
     const response = await axios.get(imageUrl, {
       responseType: "arraybuffer",
     });
-    //test
 
     const base64Image = Buffer.from(response.data, "binary").toString("base64");
     const imageData = `data:${response.headers["content-type"]};base64,${base64Image}`;
