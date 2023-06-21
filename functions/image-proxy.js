@@ -3,7 +3,7 @@ const axios = require("axios");
 
 const app = express();
 
-app.get("/download-image", async (req, res) => {
+app.get("/image-proxy", async (req, res) => {
   const imageUrl = req.query.imageUrl;
 
   try {
