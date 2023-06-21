@@ -6,8 +6,10 @@ exports.handler = async function (event, context) {
     const { urls } = JSON.parse(event.body);
 
     const base64Images = [];
+    console.log(urls);
 
     for (const url of urls) {
+      console.log("test");
       const response = await axios.get(url, {
         responseType: "arraybuffer",
       });
