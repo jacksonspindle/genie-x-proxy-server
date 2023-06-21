@@ -2,6 +2,7 @@ const axios = require("axios");
 
 exports.handler = async function (event, context) {
   try {
+    console.log("request made");
     const { urls } = JSON.parse(event.body);
 
     const base64Images = [];
