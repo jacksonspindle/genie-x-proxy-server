@@ -24,7 +24,7 @@ exports.handler = async function (event, context) {
       body: JSON.stringify({ base64Images }),
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:3000", // Replace with the URL of your local development environment
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST",
       },
     };
@@ -34,7 +34,7 @@ exports.handler = async function (event, context) {
       body: JSON.stringify({ error: "Failed to download images" }),
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:3000", // Replace with the URL of your local development environment
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST",
       },
     };
