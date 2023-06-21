@@ -20,6 +20,8 @@ exports.handler = async function (event, context) {
       base64Images.push(imageData);
     }
 
+    console.log(base64Images);
+
     return {
       statusCode: 200,
       body: JSON.stringify({ base64Images }),
