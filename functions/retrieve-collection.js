@@ -2,6 +2,18 @@ const axios = require("axios");
 
 exports.handler = async function (event, context) {
   console.log(event);
+  // Handle preflight request
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 204,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST",
+      },
+    };
+  }
+
   try {
     console.log("request made");
     const { urls } = JSON.parse(event.body);
