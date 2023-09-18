@@ -1,8 +1,11 @@
 const axios = require("axios");
 
 module.exports.handler = async function (event, context) {
+  console.log(event);
+  console.log("test");
   try {
     const imageUrl = event.queryStringParameters.imageUrl;
+    console.log(imageUrl);
     const response = await axios.get(imageUrl, {
       responseType: "arraybuffer",
     });
