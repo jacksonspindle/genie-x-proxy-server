@@ -2,11 +2,13 @@ const axios = require("axios");
 
 exports.handler = async function (event, context) {
   try {
-    console.log("Event:", event);
     const imageUrl = event.queryStringParameters.imageUrl;
-    console.log("Fetching image from:", imageUrl); // Log the URL being fetched
+    const token = event.queryStringParameters.token; // Get the token parameter
+    const imageUrlWithToken = `${imageUrl}&token=${token}`; // Append the token to the image URL
 
-    const response = await axios.get(imageUrl, {
+    console.log("Fetching image from:", imageUrlWithToken); // Log the URL being fetched
+
+    const response = await axios.get(imageUrlWithToken, {
       responseType: "arraybuffer",
     });
 
