@@ -2,6 +2,7 @@ const axios = require("axios");
 
 exports.handler = async function (event, context) {
   try {
+    console.log("Event:", event);
     const imageUrl = event.queryStringParameters.imageUrl;
     console.log("Fetching image from:", imageUrl); // Log the URL being fetched
 
