@@ -4,9 +4,9 @@ exports.handler = async function (event, context) {
   try {
     const imageUrl = event.queryStringParameters.imageUrl;
     const token = event.queryStringParameters.token; // Get the token parameter
-    const imageUrlWithToken = `${encodeURIComponent(
-      imageUrl
-    )}&token=${encodeURIComponent(token)}`; // Encode both URL components
+
+    // Create the image URL with '/' instead of '%2F'
+    const imageUrlWithToken = `https://firebasestorage.googleapis.com/v0/b/geniex-1d1e3.appspot.com/o/user_images/${imageUrl}/${token}?alt=media`;
 
     console.log("Fetching image from:", imageUrlWithToken); // Log the URL being fetched
 
