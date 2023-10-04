@@ -4,7 +4,9 @@ exports.handler = async function (event, context) {
   try {
     const imageUrl = event.queryStringParameters.imageUrl;
     const token = event.queryStringParameters.token; // Get the token parameter
-    const imageUrlWithToken = `${imageUrl}&token=${token}`; // Append the token to the image URL
+    const imageUrlWithToken = `${encodeURIComponent(
+      imageUrl
+    )}&token=${encodeURIComponent(token)}`; // Encode both URL components
 
     console.log("Fetching image from:", imageUrlWithToken); // Log the URL being fetched
 
