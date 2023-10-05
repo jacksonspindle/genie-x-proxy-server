@@ -8,9 +8,11 @@ exports.handler = async function (event, context) {
     // Construct the image URL using the provided parameters
     const imageUrlWithToken = `${imageUrl}?alt=media&token=${token}`;
 
+    console.log("imageUrl", imageUrl);
+
     console.log("Fetching image from:", imageUrlWithToken); // Log the URL being fetched
 
-    const response = await axios.get(imageUrlWithToken, {
+    const response = await axios.get(imageUrl, {
       responseType: "arraybuffer",
     });
 
