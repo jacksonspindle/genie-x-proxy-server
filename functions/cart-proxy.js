@@ -2,8 +2,7 @@ const axios = require("axios");
 
 exports.handler = async function (event, context) {
   try {
-    const imageUrl = decodeURIComponent(event.queryStringParameters.imageUrl);
-    // const imageUrl = decodeURIComponent(event.queryStringParameters.imageUrl);
+    const imageUrl = event.queryStringParameters.imageUrl; // Directly use the imageUrl without decoding
     const token = event.queryStringParameters.token; // Get the token parameter
 
     // Construct the image URL using the provided parameters
@@ -16,7 +15,8 @@ exports.handler = async function (event, context) {
 
     console.log("Fetching image from:", imageUrlWithToken); // Log the URL being fetched
 
-    const response = await axios.get(event.rawUrl, {
+    const response = await axios.get(imageUrlWithToken, {
+      // Use imageUrlWithToken instead of event.rawUrl
       responseType: "arraybuffer",
     });
 
