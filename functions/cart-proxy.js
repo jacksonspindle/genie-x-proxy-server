@@ -7,8 +7,9 @@ exports.handler = async function (event, context) {
     const token = event.queryStringParameters.token; // Get the token parameter
 
     // Construct the image URL using the provided parameters
-    const imageUrlWithToken = `${imageUrl}?alt=media&token=${token}`;
+    const imageUrlWithToken = `${imageUrl}&token=${token}`;
 
+    console.log(imageUrlWithToken);
     console.log("event:", event);
     console.log("event raw url:", event.rawUrl);
     console.log("imageUrl", imageUrl);
